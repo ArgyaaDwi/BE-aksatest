@@ -27,6 +27,8 @@ class UpdateEmployeeRequest extends FormRequest
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'division_id' => 'required|exists:divisions,id',
             'position' => 'required|string|max:255',
+            'remove_image' => 'nullable|boolean',
+
         ];
     }
 }

@@ -60,9 +60,24 @@ class EmployeeController extends Controller
             'message' => 'Data karyawan berhasil ditambahkan',
         ], 201);
     }
+    public function show($id)
+    {
+        $employee = Employee::with('division')->findOrFail($id);
+        return response()->json([
+            'status' => 'success',
+            'data' => $employee,
+        ]);
+    }
+
     public function update(UpdateEmployeeRequest $request, $id)
     {
         $employee = Employee::findOrFail($id);
+        if ($request->boolean('remove_image')) {
+            if ($employee->image && Storage::disk('public')->exists($employee->image)) {
+                Storage::disk('public')->delete($employee->image);
+            }
+            $employee->image = null;
+        }
 
         if ($request->hasFile('image')) {
             if ($employee->image && Storage::disk('public')->exists($employee->image)) {
