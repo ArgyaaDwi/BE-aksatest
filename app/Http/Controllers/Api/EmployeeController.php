@@ -129,9 +129,9 @@ class EmployeeController extends Controller
     public function latest()
     {
         $latestEmployees = Employee::with('division')
-            ->latest()
+            ->latest('created_at')
             ->take(5)
-            ->get(['id', 'name', 'position', 'division_id', 'image', 'created_at']);
+            ->get();
 
         return response()->json([
             'status' => 'success',
