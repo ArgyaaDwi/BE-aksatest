@@ -16,6 +16,9 @@ Route::middleware('guest')->group(function () {
 
 // login
 Route::middleware('auth:sanctum')->group(function () {
+    // profile
+    Route::put('/profile', [AuthController::class, 'updateProfile']);
+
     // divisions
     Route::prefix('divisions')->group(function () {
         Route::get('/', [DivisionController::class, 'index']);
