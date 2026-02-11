@@ -28,6 +28,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [EmployeeController::class, 'store']);
         Route::put('/{id}', [EmployeeController::class, 'update']);
         Route::delete('/{id}', [EmployeeController::class, 'destroy']);
+        Route::get('/total/count', [EmployeeController::class, 'count']);
+        Route::get('/latest/5', [EmployeeController::class, 'latest']);
     });
 });
 

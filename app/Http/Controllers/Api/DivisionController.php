@@ -32,4 +32,14 @@ class DivisionController extends Controller
             ],
         ]);
     }
+    public function count()
+    {
+        $count = Division::count();
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'count' => $count
+            ]
+        ]);
+    }
 }

@@ -114,4 +114,28 @@ class EmployeeController extends Controller
             'message' => 'Data karyawan berhasil dihapus',
         ]);
     }
+    public function count()
+    {
+        $count = Employee::count();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'count' => $count
+            ]
+        ]);
+    }
+
+    public function latest()
+    {
+        $latestEmployees = Employee::with('division')
+            ->latest()
+            ->take(5)
+            ->get(['id', 'name', 'position', 'division_id', 'image', 'created_at']);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $latestEmployees
+        ]);
+    }
 }
