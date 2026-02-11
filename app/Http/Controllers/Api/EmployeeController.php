@@ -47,17 +47,19 @@ class EmployeeController extends Controller
             $imagePath = $request->file('image')->store('employees', 'public');
         }
 
-        Employee::create([
+        $employee = Employee::create([
             'name' => $request->name,
             'phone' => $request->phone,
             'image' => $imagePath,
             'division_id' => $request->division_id,
             'position' => $request->position,
         ]);
+        $employee->load('division');
 
         return response()->json([
             'status' => 'success',
             'message' => 'Data karyawan berhasil ditambahkan',
+            'data' => $employee
         ], 201);
     }
     public function show($id)
@@ -65,7 +67,10 @@ class EmployeeController extends Controller
         $employee = Employee::with('division')->findOrFail($id);
         return response()->json([
             'status' => 'success',
-            'data' => $employee,
+            // 'data' => $employee,
+            'data' => [
+                'employee' => $employee
+            ],
         ]);
     }
 
@@ -93,10 +98,12 @@ class EmployeeController extends Controller
             'division_id' => $request->division_id,
             'position' => $request->position,
         ]);
+        $employee->load('division');
 
         return response()->json([
             'status' => 'success',
             'message' => 'Data karyawan berhasil diperbarui',
+            'data' => $employee
         ]);
     }
     public function destroy($id)
@@ -128,7 +135,8 @@ class EmployeeController extends Controller
 
     public function latest()
     {
-        $latestEmployees = Employee::with('division')
+        $latestEmployees = Employee::with(['division:id,name'])
+            ->select('id', 'name', 'position', 'division_id', 'phone', 'created_at', 'image')
             ->latest('created_at')
             ->take(5)
             ->get();

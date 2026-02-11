@@ -16,20 +16,12 @@ class Employee extends Model
     }
     protected $appends = ['image_url'];
 
-    // public function getImageUrlAttribute()
-    // {
-    //     if (!$this->image) {
-    //         return null;
-    //     }
-
-    //     return asset('storage/' . $this->image);
-    // }
     public function getImageUrlAttribute()
     {
         if (!$this->image) {
             return null;
         }
 
-        return asset('storage/' . $this->image);
+        return url('storage/' . $this->image);
     }
 }
