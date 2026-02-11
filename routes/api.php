@@ -19,6 +19,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // divisions
     Route::prefix('divisions')->group(function () {
         Route::get('/', [DivisionController::class, 'index']);
+        Route::get('/total/count', [DivisionController::class, 'count']);
     });
 
     // employees

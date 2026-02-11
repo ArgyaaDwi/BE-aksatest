@@ -42,4 +42,5 @@ class DivisionController extends Controller
             ]
         ]);
     }
+    
 }
